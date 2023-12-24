@@ -43,12 +43,19 @@ async function run() {
 
             const options = {
                 // Include only the `title` and `imdb` fields in the returned document
-                projection: { title: 1, id: 1, image: 1 },
+                projection: { title: 1, id: 1, image: 1, color: 1, size: 1, variations: 1 },
             };
 
             const result = await serviceCollection.findOne(query, options);
             res.send(result);
         })
+
+        app.post('/Product', async (req, res) => {
+            const booking = req.body;
+            console.log(booking);
+            const result = await serviceCollection.insertOne(booking);
+            res.send(result);
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
